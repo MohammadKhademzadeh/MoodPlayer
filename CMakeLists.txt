@@ -1,23 +1,39 @@
 cmake_minimum_required(VERSION 3.16)
-project(MoodPlayer VERSION 0.1 LANGUAGES CXX)
+project(MoodPlayer VERSION 0.2 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-# فعال کردن ابزار MOC
 set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTORCC ON)
 
 find_package(Qt6 REQUIRED COMPONENTS Widgets Multimedia)
 find_package(X11 REQUIRED)
 
-# اجرای اجباری ابزار moc روی فایل هدر ما
-qt6_wrap_cpp(MOC_SOURCES MainWindow.h)
-
 add_executable(MoodPlayer
     main.cpp
     MainWindow.cpp
-    ${MOC_SOURCES} # اضافه کردن فایل تولید شده توسط moc
+    src/core/SettingsManager.cpp
+    src/core/MoodEngine.cpp
+    src/core/SystemMonitor.cpp
+    src/audio/MusicEngine.cpp
+    src/ui/PlayerController.cpp
+    src/ui/SettingsDialog.cpp
+    src/integrations/SpotifyConnector.cpp
+    src/integrations/SpotifyOAuth.cpp
 )
 
-target_link_libraries(MoodPlayer PRIVATE Qt6::Widgets Qt6::Multimedia ${X11_LIBRARIES})
-target_include_directories(MoodPlayer PRIVATE ${X11_INCLUDE_DIR})
+target_include_directories(MoodPlayer PRIVATE
+    ${X11_INCLUDE_DIR}
+    src
+    src/core
+    src/audio
+    src/ui
+    src/integrations
+)
+
+target_link_libraries(MoodPlayer PRIVATE
+    Qt6::Widgets
+    Qt6::Multimedia
+    ${X11_LIBRARIES}
+)
