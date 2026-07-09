@@ -4,15 +4,16 @@
 #include <QMainWindow>
 #include <QLabel>
 #include <QPushButton>
-#include <QMediaPlayer>
-#include <QAudioOutput>
 #include <QTimer>
+#include "src/core/SystemMonitor.h"
+#include "src/core/MoodEngine.h"
+#include "src/audio/MusicEngine.h"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
 private slots:
@@ -23,17 +24,12 @@ private:
     QLabel *statusLabel;
     QLabel *cpuLabel;
     QPushButton *startStopButton;
-    
-    QMediaPlayer *player;
-    QAudioOutput *audioOutput;
-    QTimer *timer;
-    
-    bool isMonitoring;
-    long prev_idle, prev_total;
 
-    double getCPUUsage();
-    QString getActiveWindowClass();
-    void decideMusic(const QString& appClass, double cpuUsage);
+    QTimer *timer;
+    bool isMonitoring;
+
+    SystemMonitor monitor;
+    MusicEngine music;
 };
 
-#endif // MAINWINDOW_H
+#endif
