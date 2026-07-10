@@ -8,6 +8,7 @@
 #include "src/core/SystemMonitor.h"
 #include "src/core/MoodEngine.h"
 #include "src/audio/MusicEngine.h"
+#include "src/core/SettingsManager.h"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -19,6 +20,7 @@ public:
 private slots:
     void updateSystemStatus();
     void toggleMonitoring();
+    void chooseMusicFolder();
 
 private:
     QLabel *statusLabel;
@@ -30,6 +32,7 @@ private:
 
     SystemMonitor monitor;
     MusicEngine music;
+    SettingsManager settings;
 };
 
 #endif
