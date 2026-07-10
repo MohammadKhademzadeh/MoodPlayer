@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=MoodPlayer
+Comment=Smart mood based music player
+Exec=MoodPlayer
+Icon=MoodPlayer
+Terminal=false
+Categories=Audio;Music;Player;
