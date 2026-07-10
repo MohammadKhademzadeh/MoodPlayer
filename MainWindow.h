@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QLabel>
 #include <QPushButton>
+#include <QListWidget>
 #include <QTimer>
 #include "src/core/SystemMonitor.h"
 #include "src/core/MoodEngine.h"
@@ -24,6 +25,7 @@ private slots:
     void playMusic();
     void pauseMusic();
     void stopMusic();
+    void playSelectedTrack(QListWidgetItem *item);
 
 private:
     QLabel *statusLabel;
@@ -32,6 +34,7 @@ private:
     QPushButton *playButton;
     QPushButton *pauseButton;
     QPushButton *stopButton;
+    QListWidget *playlistWidget;
 
     QTimer *timer;
     bool isMonitoring;
