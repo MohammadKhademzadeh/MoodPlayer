@@ -22,12 +22,16 @@ private slots:
     void toggleMonitoring();
     void chooseMusicFolder();
     void playMusic();
+    void pauseMusic();
+    void stopMusic();
 
 private:
     QLabel *statusLabel;
     QLabel *cpuLabel;
     QPushButton *startStopButton;
     QPushButton *playButton;
+    QPushButton *pauseButton;
+    QPushButton *stopButton;
 
     QTimer *timer;
     bool isMonitoring;
