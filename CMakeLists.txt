@@ -37,3 +37,11 @@ target_link_libraries(MoodPlayer PRIVATE
     Qt6::Multimedia
     ${X11_LIBRARIES}
 )
+
+install(TARGETS MoodPlayer
+    RUNTIME DESTINATION bin
+)
+
+install(FILES resources/MoodPlayer.desktop
+    DESTINATION share/applications
+)
