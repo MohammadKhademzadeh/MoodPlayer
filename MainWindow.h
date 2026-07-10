@@ -10,6 +10,7 @@
 #include "src/core/MoodEngine.h"
 #include "src/audio/MusicEngine.h"
 #include "src/core/SettingsManager.h"
+#include "src/integrations/SpotifyConnector.h"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -26,6 +27,7 @@ private slots:
     void pauseMusic();
     void stopMusic();
     void playSelectedTrack(QListWidgetItem *item);
+    void connectSpotify();
 
 private:
     QLabel *statusLabel;
@@ -34,6 +36,7 @@ private:
     QPushButton *playButton;
     QPushButton *pauseButton;
     QPushButton *stopButton;
+    QPushButton *spotifyButton;
     QListWidget *playlistWidget;
 
     QTimer *timer;
@@ -42,6 +45,7 @@ private:
     SystemMonitor monitor;
     MusicEngine music;
     SettingsManager settings;
+    SpotifyConnector spotify;
 };
 
 #endif
