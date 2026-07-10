@@ -7,7 +7,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), isMonitoring(false)
 {
     setWindowTitle("MoodPlayer - Smart Music");
-    resize(450, 300);
+    resize(450, 320);
 
     QWidget *central = new QWidget(this);
     QVBoxLayout *layout = new QVBoxLayout(central);
@@ -17,12 +17,14 @@ MainWindow::MainWindow(QWidget *parent)
     startStopButton = new QPushButton("Start Monitoring", this);
     auto folderButton = new QPushButton("Choose Music Folder", this);
     auto nextButton = new QPushButton("Next Track", this);
+    playButton = new QPushButton("Play", this);
 
     layout->addWidget(statusLabel);
     layout->addWidget(cpuLabel);
     layout->addWidget(startStopButton);
     layout->addWidget(folderButton);
     layout->addWidget(nextButton);
+    layout->addWidget(playButton);
 
     setCentralWidget(central);
 
@@ -31,6 +33,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(timer, &QTimer::timeout, this, &MainWindow::updateSystemStatus);
     connect(startStopButton, &QPushButton::clicked, this, &MainWindow::toggleMonitoring);
     connect(folderButton, &QPushButton::clicked, this, &MainWindow::chooseMusicFolder);
+    connect(playButton, &QPushButton::clicked, this, &MainWindow::playMusic);
     connect(nextButton, &QPushButton::clicked, this, [this]() {
         music.playNext();
         statusLabel->setText("Track: " + music.currentTrack());
@@ -51,6 +54,12 @@ void MainWindow::chooseMusicFolder()
         settings.setMusicDirectory(folder);
         statusLabel->setText("Music folder loaded");
     }
+}
+
+void MainWindow::playMusic()
+{
+    music.play();
+    statusLabel->setText("Playing: " + music.currentTrack());
 }
 
 void MainWindow::toggleMonitoring()
