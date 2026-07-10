@@ -1,13 +1,12 @@
 #include "MainWindow.h"
 #include <QVBoxLayout>
 #include <QFileDialog>
-#include <QPushButton>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), isMonitoring(false)
 {
     setWindowTitle("MoodPlayer - Smart Music");
-    resize(450, 320);
+    resize(450, 360);
 
     QWidget *central = new QWidget(this);
     QVBoxLayout *layout = new QVBoxLayout(central);
@@ -18,6 +17,8 @@ MainWindow::MainWindow(QWidget *parent)
     auto folderButton = new QPushButton("Choose Music Folder", this);
     auto nextButton = new QPushButton("Next Track", this);
     playButton = new QPushButton("Play", this);
+    pauseButton = new QPushButton("Pause", this);
+    stopButton = new QPushButton("Stop", this);
 
     layout->addWidget(statusLabel);
     layout->addWidget(cpuLabel);
@@ -25,6 +26,8 @@ MainWindow::MainWindow(QWidget *parent)
     layout->addWidget(folderButton);
     layout->addWidget(nextButton);
     layout->addWidget(playButton);
+    layout->addWidget(pauseButton);
+    layout->addWidget(stopButton);
 
     setCentralWidget(central);
 
@@ -34,6 +37,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(startStopButton, &QPushButton::clicked, this, &MainWindow::toggleMonitoring);
     connect(folderButton, &QPushButton::clicked, this, &MainWindow::chooseMusicFolder);
     connect(playButton, &QPushButton::clicked, this, &MainWindow::playMusic);
+    connect(pauseButton, &QPushButton::clicked, this, &MainWindow::pauseMusic);
+    connect(stopButton, &QPushButton::clicked, this, &MainWindow::stopMusic);
     connect(nextButton, &QPushButton::clicked, this, [this]() {
         music.playNext();
         statusLabel->setText("Track: " + music.currentTrack());
@@ -60,6 +65,17 @@ void MainWindow::playMusic()
 {
     music.play();
     statusLabel->setText("Playing: " + music.currentTrack());
+}
+
+void MainWindow::pauseMusic()
+{
+    statusLabel->setText("Paused");
+}
+
+void MainWindow::stopMusic()
+{
+    music.stop();
+    statusLabel->setText("Stopped");
 }
 
 void MainWindow::toggleMonitoring()
