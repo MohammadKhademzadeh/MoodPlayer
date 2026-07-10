@@ -30,20 +30,28 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(timer, &QTimer::timeout, this, &MainWindow::updateSystemStatus);
     connect(startStopButton, &QPushButton::clicked, this, &MainWindow::toggleMonitoring);
-    connect(folderButton, &QPushButton::clicked, this, [this]() {
-        QString folder = QFileDialog::getExistingDirectory(this, "Music Folder");
-        if (!folder.isEmpty()) {
-            music.setMusicFolder(folder);
-            statusLabel->setText("Music folder loaded");
-        }
-    });
+    connect(folderButton, &QPushButton::clicked, this, &MainWindow::chooseMusicFolder);
     connect(nextButton, &QPushButton::clicked, this, [this]() {
         music.playNext();
         statusLabel->setText("Track: " + music.currentTrack());
     });
+
+    QString savedFolder = settings.musicDirectory();
+    if (!savedFolder.isEmpty())
+        music.setMusicFolder(savedFolder);
 }
 
 MainWindow::~MainWindow() {}
+
+void MainWindow::chooseMusicFolder()
+{
+    QString folder = QFileDialog::getExistingDirectory(this, "Music Folder");
+    if (!folder.isEmpty()) {
+        music.setMusicFolder(folder);
+        settings.setMusicDirectory(folder);
+        statusLabel->setText("Music folder loaded");
+    }
+}
 
 void MainWindow::toggleMonitoring()
 {
