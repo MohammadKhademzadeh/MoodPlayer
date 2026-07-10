@@ -44,12 +44,14 @@ MainWindow::MainWindow(QWidget *parent)
     connect(playlistWidget, &QListWidget::itemDoubleClicked, this, &MainWindow::playSelectedTrack);
     connect(nextButton, &QPushButton::clicked, this, [this]() {
         music.playNext();
-        statusLabel->setText("Track: " + music.currentTrack());
+        statusLabel->setText("Playing: " + music.currentTrack());
     });
 
     QString savedFolder = settings.musicDirectory();
-    if (!savedFolder.isEmpty())
+    if (!savedFolder.isEmpty()) {
         music.setMusicFolder(savedFolder);
+        playlistWidget->addItems(music.playlist());
+    }
 }
 
 MainWindow::~MainWindow() {}
@@ -76,6 +78,7 @@ void MainWindow::playSelectedTrack(QListWidgetItem *item)
 void MainWindow::playMusic()
 {
     music.play();
+    statusLabel->setText("Playing: " + music.currentTrack());
 }
 
 void MainWindow::pauseMusic()
