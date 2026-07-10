@@ -2,6 +2,8 @@
 
 #include <QObject>
 #include <QStringList>
+#include <QMediaPlayer>
+#include <QAudioOutput>
 
 class MusicEngine : public QObject {
     Q_OBJECT
@@ -13,9 +15,12 @@ public:
     QStringList playlist() const;
     void playNext();
     void stop();
+    void play();
     QString currentTrack() const;
 
 private:
     QStringList tracks;
     QString current;
+    QMediaPlayer* player;
+    QAudioOutput* audioOutput;
 };
