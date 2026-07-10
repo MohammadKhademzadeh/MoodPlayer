@@ -1,0 +1,22 @@
+name: Build MoodPlayer
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  linux-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: 6.8.0
+
+      - name: Configure
+        run: cmake -B build -S .
+
+      - name: Build
+        run: cmake --build build --parallel
