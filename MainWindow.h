@@ -6,11 +6,14 @@
 #include <QPushButton>
 #include <QListWidget>
 #include <QTimer>
+#include <QSystemTrayIcon>
 #include "src/core/SystemMonitor.h"
 #include "src/core/MoodEngine.h"
 #include "src/audio/MusicEngine.h"
 #include "src/core/SettingsManager.h"
 #include "src/integrations/SpotifyConnector.h"
+
+class CpuGauge; // Forward declaration
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -18,6 +21,9 @@ class MainWindow : public QMainWindow {
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+protected:
+    void closeEvent(QCloseEvent *event) override;
 
 private slots:
     void updateSystemStatus();
@@ -30,8 +36,11 @@ private slots:
     void connectSpotify();
 
 private:
+    void setupSystemTray();
+    void setupUI();
+    void applyTheme();
+
     QLabel *statusLabel;
-    QLabel *cpuLabel;
     QPushButton *startStopButton;
     QPushButton *playButton;
     QPushButton *pauseButton;
@@ -41,6 +50,8 @@ private:
 
     QTimer *timer;
     bool isMonitoring;
+    CpuGauge *cpuGauge;
+    QSystemTrayIcon *trayIcon;
 
     SystemMonitor monitor;
     MusicEngine music;
