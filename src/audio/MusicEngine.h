@@ -14,8 +14,10 @@ public:
     void setMusicFolder(const QString& folder);
     QStringList playlist() const;
     void playNext();
+    void playTrack(int index);
     void stop();
     void play();
+    void pause();
     QString currentTrack() const;
 
 private:
@@ -23,4 +25,5 @@ private:
     QString current;
     QMediaPlayer* player;
     QAudioOutput* audioOutput;
+    int currentIndex = -1;
 };
